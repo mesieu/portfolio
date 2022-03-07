@@ -23,7 +23,6 @@ app.get('/', (req, res) => {
 app.get('/experience', (req, res) => {
   res.render('experience', {
     title: 'G.D.R - Experience',
-    description: homeContent.description,
   });
 });
 
