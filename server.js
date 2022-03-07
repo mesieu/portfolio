@@ -3,9 +3,6 @@ const express = require('express');
 const app = express();
 const { engine } = require('express-handlebars');
 const nodemailer = require('nodemailer');
-
-const homeContent = require('./content');
-
 // Body Parser
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -68,6 +65,6 @@ app.post('/contact/send', async (req, res) => {
   res.render('contact', { title: 'G.D.R - Contact' });
 });
 
-const listener = app.listen(process.env.PORT || 8080, () => {
+const listener = app.listen(process.env.PORT || 3000, () => {
   console.log('Your app is listening on port ' + listener.address().port);
 });
