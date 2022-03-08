@@ -1,8 +1,15 @@
 require('dotenv').config();
 const express = require('express');
-const app = express();
 const { engine } = require('express-handlebars');
 const nodemailer = require('nodemailer');
+const aws = require('aws-sdk');
+const app = express();
+
+//Setting AWS region
+aws.config.update({
+  region: 'us-east-1',
+});
+
 // Body Parser
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -16,53 +23,64 @@ app.set('view engine', 'handlebars');
 
 //Serving home page
 app.get('/', (req, res) => {
-  res.render('home', { title: 'G.D.R - Home' });
+  res.render('about', { title: 'G.D.R - About' });
 });
-
 //Serving experience section
-app.get('/experience', (req, res) => {
+app.get('/experience', (req, ress) => {
   res.render('experience', {
     title: 'G.D.R - Experience',
   });
 });
-
 //Serving contact form
 app.get('/contact', (req, res) => {
   res.render('contact', { title: 'G.D.R - Contact' });
 });
 
-app.post('/contact/send', async (req, res) => {
-  const email = req.body.email;
-  const subject = req.body.subject;
-  const message = req.body.message;
+// Instantiate SES.
+const ses = new aws.SES();
+app.post(
+  '/contact/send',
+  async (req, res, next) => {
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const email = req.body.email;
+    const subject = req.body.subject;
+    const message = req.body.message;
+    const output = `
+  <h3>Informations du contact : </h3>
+  <p>Nom : ${firstName} ${lastName}</p>
+  <p>Courriel : ${email}</p>
+  <h3>Message</h3>
+  <h4>Objet : ${subject}</h4>
+  <p>${message}</p>`;
 
-  // let transporter = nodemailer.createTransport({
-  //   host: 'email-smtp.us-east-1.amazonaws.com',
-  //   port: 465,
-  //   secure: true,
-  //   auth: {
-  //     user: process.env.USER,
-  //     pass: process.env.PASS,
-  //   },
-  //   tls: {
-  //     rejectUnauthorized: false,
-  //   },
-  // });
+    let transporter = nodemailer.createTransport({
+      SES: { ses, aws },
+    });
 
-  // let mailOptions = {
-  //   from: email,
-  //   to: 'guizmo.drs@gmail.com',
-  //   subject: subject,
-  //   text: message,
-  // };
+    let mailOption = {
+      from: process.env.EMAIL,
+      to: process.env.EMAIL,
+      subject: 'Nouvelle demande de contact !',
+      html: output,
+    };
 
-  // transporter.sendMail(mailOptions, (error, info) => {
-  //   if (error) return console.log(error);
-  //   console.log(info);
-  // });
+    transporter.sendMail(mailOption, (err, info) => {
+      if (err) return console.log(err);
+      console.log(info);
+    });
 
-  res.render('contact', { title: 'G.D.R - Contact' });
-});
+    res.render('contact', {
+      title: 'G.D.R - Contact',
+      emailConfirmation: 'Message was sent!',
+    });
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    return next();
+  },
+  (req, res) => {
+    return res.redirect('/');
+  }
+);
 
 const listener = app.listen(process.env.PORT || 8080, () => {
   console.log('Your app is listening on port ' + listener.address().port);
