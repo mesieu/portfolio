@@ -38,15 +38,13 @@ app.get('/contact', (req, res) => {
 
 // Instantiate SES.
 const ses = new aws.SES();
-app.post(
-  '/contact/send',
-  async (req, res, next) => {
-    const firstName = req.body.firstName;
-    const lastName = req.body.lastName;
-    const email = req.body.email;
-    const subject = req.body.subject;
-    const message = req.body.message;
-    const output = `
+app.post('/contact/send', async (req, res, next) => {
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const email = req.body.email;
+  const subject = req.body.subject;
+  const message = req.body.message;
+  const output = `
   <h3>Informations du contact : </h3>
   <p>Nom : ${firstName} ${lastName}</p>
   <p>Courriel : ${email}</p>
@@ -54,33 +52,27 @@ app.post(
   <h4>Objet : ${subject}</h4>
   <p>${message}</p>`;
 
-    let transporter = nodemailer.createTransport({
-      SES: { ses, aws },
-    });
+  let transporter = nodemailer.createTransport({
+    SES: { ses, aws },
+  });
 
-    let mailOption = {
-      from: process.env.EMAIL,
-      to: process.env.EMAIL,
-      subject: 'Nouvelle demande de contact !',
-      html: output,
-    };
+  let mailOption = {
+    from: process.env.EMAIL,
+    to: process.env.EMAIL,
+    subject: 'Nouvelle demande de contact !',
+    html: output,
+  };
 
-    transporter.sendMail(mailOption, (err, info) => {
-      if (err) return console.log(err);
-      console.log(info);
-    });
+  transporter.sendMail(mailOption, (err, info) => {
+    if (err) return console.log(err);
+    console.log(info);
+  });
 
-    res.render('contact', {
-      title: 'G.D.R - Contact',
-      emailConfirmation: 'Message was sent!',
-    });
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    return next();
-  },
-  (req, res) => {
-    return res.redirect('/');
-  }
-);
+  res.render('contact', {
+    title: 'G.D.R - Contact',
+    emailConfirmation: 'Message was sent!',
+  });
+});
 
 const listener = app.listen(process.env.PORT || 8080, () => {
   console.log('Your app is listening on port ' + listener.address().port);
