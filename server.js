@@ -68,10 +68,7 @@ app.post('/contact/send', async (req, res, next) => {
     console.log(info);
   });
 
-  res.render('contact', {
-    title: 'G.D.R - Contact',
-    emailConfirmation: 'Message was sent!',
-  });
+  res.redirect('/contact');
 });
 
 const listener = app.listen(process.env.PORT || 8080, () => {
