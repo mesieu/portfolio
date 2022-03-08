@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
   res.render('about', { title: 'G.D.R - About' });
 });
 //Serving experience section
-app.get('/experience', (req, ress) => {
+app.get('/experience', (req, res) => {
   res.render('experience', {
     title: 'G.D.R - Experience',
   });
