@@ -77,11 +77,10 @@ app.post('/contact/send', async (req, res, next) => {
   };
 
   transporter.sendMail(mailOption, (err, info) => {
-    if (err) return res.json(err);
-    res.json(info);
+    if (err) return console.log(err);
+    console.log(info);
   });
-
-  // res.json(info);
+  res.redirect('/contact');
 });
 
 const listener = app.listen(process.env.PORT || 8080, () => {
