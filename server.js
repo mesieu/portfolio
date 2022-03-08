@@ -38,6 +38,19 @@ app.get('/contact', (req, res) => {
 
 // Instantiate SES.
 const ses = new aws.SES();
+
+//Listing verified emails
+app.get('/list', function (req, res) {
+  ses.listVerifiedEmailAddresses(function (err, data) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(data);
+    }
+  });
+});
+
+// Sending mail
 app.post('/contact/send', async (req, res, next) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
