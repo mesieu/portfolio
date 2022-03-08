@@ -23,17 +23,15 @@ app.set('view engine', 'handlebars');
 
 //Serving home page
 app.get('/', (req, res) => {
-  res.render('about', { title: 'G.D.R - About' });
+  res.render('about');
 });
 //Serving experience section
 app.get('/experience', (req, res) => {
-  res.render('experience', {
-    title: 'G.D.R - Experience',
-  });
+  res.render('experience');
 });
 //Serving contact form
 app.get('/contact', (req, res) => {
-  res.render('contact', { title: 'G.D.R - Contact' });
+  res.render('contact');
 });
 
 // Instantiate SES.
