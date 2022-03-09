@@ -37,6 +37,21 @@ app.get('/contact', (req, res) => {
 // Instantiate SES.
 const ses = new aws.SES();
 
+// Verify email addresses.
+app.get('/verify', function (req, res) {
+  var params = {
+    EmailAddress: 'guillaume.drs@hotmail.fr',
+  };
+
+  ses.verifyEmailAddress(params, function (err, data) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(data);
+    }
+  });
+});
+
 //Listing verified emails
 app.get('/list', function (req, res) {
   ses.listVerifiedEmailAddresses(function (err, data) {
