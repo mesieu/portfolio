@@ -78,9 +78,9 @@ app.post('/contact/send', async (req, res, next) => {
   <h4>Objet : ${subject}</h4>
   <p>${message}</p>`;
 
-  const confirmationOutput = `
-  Hello and thank you for your message. I will try to respond as soon as possible.
-  Guillaume`;
+  // const confirmationOutput = `
+  // Hello and thank you for your message. I will try to respond as soon as possible.
+  // Guillaume`;
 
   let transporter = nodemailer.createTransport({
     SES: { ses, aws },
@@ -93,21 +93,21 @@ app.post('/contact/send', async (req, res, next) => {
     html: output,
   };
 
-  let mailOptionReceptionConfirmation = {
-    from: process.env.EMAIL,
-    to: email,
-    subject: 'Thank you for reaching out !',
-    text: confirmationOutput,
-  };
+  // let mailOptionReceptionConfirmation = {
+  //   from: process.env.EMAIL,
+  //   to: email,
+  //   subject: 'Thank you for reaching out !',
+  //   text: confirmationOutput,
+  // };
 
   transporter.sendMail(mailOption, (err, info) => {
     if (err) return console.log(err);
     console.log(info);
   });
-  transporter.sendMail(mailOptionReceptionConfirmation, (err, info) => {
-    if (err) return console.log(err);
-    console.log(info);
-  });
+  // transporter.sendMail(mailOptionReceptionConfirmation, (err, info) => {
+  //   if (err) return console.log(err);
+  //   console.log(info);
+  // });
 
   res.redirect('/contact');
 });
