@@ -1,13 +1,13 @@
-require('dotenv').config();
-const express = require('express');
-const { engine } = require('express-handlebars');
-const nodemailer = require('nodemailer');
-const aws = require('aws-sdk');
+require("dotenv").config();
+const express = require("express");
+const { engine } = require("express-handlebars");
+const nodemailer = require("nodemailer");
+const aws = require("aws-sdk");
 const app = express();
 
 //Setting AWS region
 aws.config.update({
-  region: 'us-east-1',
+  region: "us-east-1",
 });
 
 // Body Parser
@@ -15,32 +15,32 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // Static assets
-app.use(express.static('public'));
+app.use(express.static("public"));
 
 //Using handlebars as view engine
-app.engine('handlebars', engine());
-app.set('view engine', 'handlebars');
+app.engine("handlebars", engine());
+app.set("view engine", "handlebars");
 
 //Serving home page
-app.get('/', (req, res) => {
-  res.render('about');
+app.get("/", (req, res) => {
+  res.render("about");
 });
 //Serving experience section
-app.get('/experience', (req, res) => {
-  res.render('experience');
+app.get("/experience", (req, res) => {
+  res.render("experience");
 });
-//Serving contact form
-app.get('/contact', (req, res) => {
-  res.render('contact');
-});
+// //Serving contact form
+// app.get('/contact', (req, res) => {
+//   res.render('contact');
+// });
 
 // Instantiate SES.
 const ses = new aws.SES();
 
 // Verify email addresses.
-app.get('/verify', function (req, res) {
+app.get("/verify", function (req, res) {
   var params = {
-    EmailAddress: 'guillaume.drs@hotmail.fr',
+    EmailAddress: "guillaume.drs@hotmail.fr",
   };
 
   ses.verifyEmailAddress(params, function (err, data) {
@@ -53,7 +53,7 @@ app.get('/verify', function (req, res) {
 });
 
 //Listing verified emails
-app.get('/list', function (req, res) {
+app.get("/list", function (req, res) {
   ses.listVerifiedEmailAddresses(function (err, data) {
     if (err) {
       res.send(err);
@@ -64,7 +64,7 @@ app.get('/list', function (req, res) {
 });
 
 // Sending mail
-app.post('/contact/send', async (req, res, next) => {
+app.post("/contact/send", async (req, res, next) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const email = req.body.email;
@@ -89,7 +89,7 @@ app.post('/contact/send', async (req, res, next) => {
   let mailOption = {
     from: process.env.EMAIL,
     to: process.env.EMAIL,
-    subject: 'Nouvelle demande de contact !',
+    subject: "Nouvelle demande de contact !",
     html: output,
   };
 
@@ -109,9 +109,9 @@ app.post('/contact/send', async (req, res, next) => {
   //   console.log(info);
   // });
 
-  res.redirect('/contact');
+  res.redirect("/contact");
 });
 
 const listener = app.listen(process.env.PORT || 8080, () => {
-  console.log('Your app is listening on port ' + listener.address().port);
+  console.log("Your app is listening on port " + listener.address().port);
 });

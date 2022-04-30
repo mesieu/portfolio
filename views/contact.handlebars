@@ -1,95 +1,98 @@
 <!-- Contact me section -->
-<div class='container wrapper' id='contact'>
-  <div class='row p-5'>
+<div class="container wrapper" id="contact">
+  <div class="row p-5">
     {{! Section Title }}
-    <div class='row text-center mb-5' id='name'><div
-        class='section-title'
+    <div class="row text-center mb-5" id="name"><div
+        class="section-title"
       >Contact</div></div>
-    <div class='row text-center mb-3' style='color: green;'>
-      <div class='col' id='email-confirmation'></div>
+    <div class="row text-center mb-3" style="color: green;">
+      <div class="col" id="email-confirmation"></div>
     </div>
     <!-- Contact Form -->
     <form
-      action='/contact/send'
-      method='post'
-      id='contact-form'
-      class='row needs-validation'
+      action="/contact/send"
+      method="post"
+      id="contact-form"
+      class="row needs-validation"
       novalidate
     >
       {{! First name and last name }}
-      <div class='col-md-4 mb-3'>
+      <div class="col-md-4 mb-3">
         <input
-          type='text'
-          class='form-control'
-          name='firstName'
-          placeholder='first name'
+          type="text"
+          class="form-control"
+          name="firstName"
+          placeholder="first name"
           required
         />
-        <div class='invalid-feedback'>Please provide first name</div>
+        <div class="invalid-feedback">Please provide first name</div>
       </div>
-      <div class='col-md-4 mb-3'>
+      <div class="col-md-4 mb-3">
         <input
-          type='text'
-          class='form-control'
-          name='lastName'
-          placeholder='last name'
+          type="text"
+          class="form-control"
+          name="lastName"
+          placeholder="last name"
           required
         />
-        <div class='invalid-feedback'>Please provide last name</div>
+        <div class="invalid-feedback">Please provide last name</div>
       </div>
-      <div class='col-md-4 mb-3'>
+      <div class="col-md-4 mb-3">
         <input
-          type='email'
-          class='form-control'
-          name='email'
-          placeholder='email'
+          type="email"
+          class="form-control"
+          name="email"
+          placeholder="email"
           required
         />
-        <div class='invalid-feedback'>Please provide email</div>
+        <div class="invalid-feedback">Please provide email</div>
       </div>
       <!-- Email and Subject -->
-      <div class='col-12 mb-3'>
+      <div class="col-12 mb-3">
         <input
-          type='text'
-          class='form-control'
-          name='subject'
-          placeholder='subject'
+          type="text"
+          class="form-control"
+          name="subject"
+          placeholder="subject"
           required
         />
-        <div class='invalid-feedback'>Please provide subject</div>
+        <div class="invalid-feedback">Please provide subject</div>
       </div>
 
       <!-- Message -->
-      <div class='col-12 mb-3'>
+      <div class="col-12 mb-3">
         <textarea
-          class='form-control'
-          name='message'
-          rows='8'
-          placeholder='message'
+          class="form-control"
+          name="message"
+          rows="8"
+          placeholder="message"
           required
         ></textarea>
-        <div class='invalid-feedback'>Please provide message</div>
+        <div class="invalid-feedback">Please provide message</div>
 
       </div>
-      <div class='col-12 text-end'>
-        <button type='submit' class='btn btn-dark'>send</button>
+      <div class="col-12">
+        <div class="g-recaptcha" data-sitekey=""></div>
       </div>
-      <div class='col-12 text-center'></div>
+      <div class="col-12 text-end">
+        <button type="submit" class="btn btn-dark">send</button>
+      </div>
+      <div class="col-12 text-center"></div>
     </form>
-    <div class='row'>
-      <div class='col text-center'>
+    <div class="row">
+      <div class="col text-center">
         <a
-          href='https://www.linkedin.com/in/gdesrosiers
-            '
-          target='_blank'
-        ><img src='/images/linkedin.svg' alt='linkedin icon' /></a>
-        <a href='https://www.freecodecamp.org/ademine' target='_blank'><img
-            src='/images/fcc_secondary_small.svg'
-            alt='freecodecamp icon'
+          href="https://www.linkedin.com/in/gdesrosiers
+            "
+          target="_blank"
+        ><img src="/images/linkedin.svg" alt="linkedin icon" /></a>
+        <a href="https://www.freecodecamp.org/ademine" target="_blank"><img
+            src="/images/fcc_secondary_small.svg"
+            alt="freecodecamp icon"
           /></a>
-        <a href='https://github.com/mesieu' target='_blank'><img
-            src='/images/github.svg'
-            alt='github icon'
+        <a href="https://github.com/mesieu" target="_blank"><img
+            src="/images/github.svg"
+            alt="github icon"
           /></a>
       </div>
     </div>
